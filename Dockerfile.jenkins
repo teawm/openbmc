@@ -1,9 +1,8 @@
-# Dockerfile.jenkins
 FROM jenkins/jenkins:lts
 
 USER root
 
-# Установка Docker CLI
+# Установка зависимостей
 RUN apt-get update && \
     apt-get install -y \
         apt-transport-https \
@@ -15,21 +14,18 @@ RUN apt-get update && \
         python3-pip \
         && rm -rf /var/lib/apt/lists/*
 
-# Добавляем официальный репозиторий Docker
+# Установка Docker CLI (только клиент!)
 RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
 RUN echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null
-
-# Устанавливаем Docker CLI (не демон!)
 RUN apt-get update && \
     apt-get install -y docker-ce-cli && \
     rm -rf /var/lib/apt/lists/*
 
-# Устанавливаем Python-зависимости
-RUN pip3 install pytest requests selenium locust chromedriver-autoinstaller
+# Установка Python-пакетов
+RUN pip3 install --no-cache-dir pytest requests selenium locust chromedriver-autoinstaller
 
-# Делаем пользователя jenkins членом группы docker (ID обычно 999)
-ARG DOCKER_GID=999
-RUN groupmod -g ${DOCKER_GID} docker || groupadd -g ${DOCKER_GID} docker
+# Добавляем пользователя jenkins в группу docker
+RUN groupadd -g 999 docker 2>/dev/null || true
 RUN usermod -aG docker jenkins
 
 USER jenkins
