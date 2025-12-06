@@ -4,9 +4,11 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+import chromedriver_autoinstaller
 import time
 
 def create_driver():
+
     options = Options()
     options.add_argument('--headless')
     options.add_argument('--no-sandbox')
@@ -14,7 +16,8 @@ def create_driver():
     options.add_argument('--ignore-certificate-errors')
     options.add_argument('--allow-insecure-localhost')
 
-    service = Service('/usr/lib/chromium-browser/chromedriver')
+    chromedriver_autoinstaller.install()
+    service = Service()
     return webdriver.Chrome(service=service, options=options)
 
 def test_successful_auth():

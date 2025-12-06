@@ -1,31 +1,34 @@
+# Dockerfile.jenkins (исправленная и оптимизированная версия)
 FROM jenkins/jenkins:lts
 
 USER root
 
-# Установка зависимостей
+# 1. Установка Docker CLI (без репозитория — быстро)
+RUN curl -fsSLO "https://download.docker.com/linux/static/stable/$(uname -m)/docker-26.1.4.tgz" && \
+    tar xzvf docker-26.1.4.tgz --strip 1 -C /usr/local/bin docker/docker && \
+    rm -f docker-26.1.4.tgz
+
+# 2. Установка Python + build-зависимостей
 RUN apt-get update && \
-    apt-get install -y \
-        apt-transport-https \
-        ca-certificates \
-        curl \
-        gnupg \
-        lsb-release \
+    apt-get install -y --no-install-recommends \
         python3 \
         python3-pip \
+        python3-dev \
+        build-essential \
+        libffi-dev \
+        libssl-dev \
         && rm -rf /var/lib/apt/lists/*
 
-# Установка Docker CLI (только клиент!)
-RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
-RUN echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null
-RUN apt-get update && \
-    apt-get install -y docker-ce-cli && \
-    rm -rf /var/lib/apt/lists/*
+# 3. Установка Python-пакетов
+RUN pip3 install --no-cache-dir --break-system-packages \
+    pytest \
+    requests \
+    selenium \
+    locust \
+    chromedriver-autoinstaller
 
-# Установка Python-пакетов
-RUN pip3 install --no-cache-dir pytest requests selenium locust chromedriver-autoinstaller
-
-# Добавляем пользователя jenkins в группу docker
-RUN groupadd -g 999 docker 2>/dev/null || true
-RUN usermod -aG docker jenkins
+# 4. Добавляем пользователя jenkins в группу docker
+RUN groupadd -g 999 docker 2>/dev/null || true && \
+    usermod -aG docker jenkins
 
 USER jenkins
