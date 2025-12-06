@@ -11,6 +11,7 @@ pipeline {
         stage('Start OpenBMC') {
             steps {
                 script {
+                    sh 'docker rm -f openbmc || true'
                     sh 'docker build -t openbmc-qemu .'
                     sh 'docker run -d --name openbmc -p 2222:22 -p 2443:443 openbmc-qemu'
                     sh 'sleep 45'
