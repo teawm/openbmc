@@ -1,19 +1,15 @@
 FROM ubuntu:22.04
 
-# Убираем интерактивные запросы при установке пакетов
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Установка QEMU и базовых утилит
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
     qemu-system-arm \
     ca-certificates \
     && rm -rf /var/lib/apt/lists/*
 
-# Открываем порты
 EXPOSE 22 443 623
 
-# Запускаем QEMU
 CMD ["qemu-system-arm", \
     "-m", "256", \
     "-M", "romulus-bmc", \

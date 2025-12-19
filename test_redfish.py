@@ -71,13 +71,12 @@ def test_redfish_and_ipmi_interfaces_available(session):
              "-U", "root", "-P", "0penBmc", "fru", "print"],
             capture_output=True, text=True, timeout=10
         )
-        # Главное — успешное выполнение команды (returncode 0)
         ipmi_ok = (result.returncode == 0)
     except Exception:
         ipmi_ok = False
 
     assert redfish_ok, "Redfish API недоступен"
-    # assert ipmi_ok, "IPMI не отвечает (команда завершилась с ошибкой)"
+    assert ipmi_ok, "IPMI не отвечает"
 
 if __name__ == "__main__":
     pytest.main([__file__, "-v"])

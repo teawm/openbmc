@@ -1,14 +1,11 @@
-# Dockerfile.jenkins (исправленная и оптимизированная версия)
 FROM jenkins/jenkins:lts
 
 USER root
 
-# 1. Установка Docker CLI (без репозитория — быстро)
 RUN curl -fsSLO "https://download.docker.com/linux/static/stable/$(uname -m)/docker-26.1.4.tgz" && \
     tar xzvf docker-26.1.4.tgz --strip 1 -C /usr/local/bin docker/docker && \
     rm -f docker-26.1.4.tgz
 
-# 2. Установка Python + build-зависимостей
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
         python3 \
@@ -19,7 +16,6 @@ RUN apt-get update && \
         libssl-dev \
         && rm -rf /var/lib/apt/lists/*
 
-# 3. Установка Python-пакетов
 RUN pip3 install --no-cache-dir --break-system-packages \
     pytest \
     requests \
@@ -27,7 +23,6 @@ RUN pip3 install --no-cache-dir --break-system-packages \
     locust \
     chromedriver-autoinstaller
 
-# 4. Добавляем пользователя jenkins в группу docker
 RUN groupadd -g 999 docker 2>/dev/null || true && \
     usermod -aG docker jenkins
 
