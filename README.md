@@ -2,8 +2,8 @@
 - [x] lab 1:      
     - romulus.zip (rm)
     - romulus/
-    - [download.sh](https://github.com/teawm/openbmc/tree/main/download.sh)
-    - [openbmc.sh](https://github.com/teawm/openbmc/tree/main/openbmc.sh)
+    - [download.sh](https://github.com/teawm/openbmc/tree/main/download.sh) (rm)
+    - [openbmc.sh](https://github.com/teawm/openbmc/tree/main/openbmc.sh) (rm)
 - [x] lab 2:      
     - no lab
 - [x] lab 3:      
@@ -17,6 +17,5 @@
 - [x] lab 7:        
     - [Dockerfile](https://github.com/teawm/openbmc/tree/main/Dockerfile)
     - [Jenkinsfile](https://github.com/teawm/openbmc/tree/main/Jenkinsfile)
-    - [Dockerfile.jenkins](https://github.com/teawm/openbmc/tree/main/Dockerfile.jenkins) // использовался для нахождения ошибок
 - [x] lab 8:
     - no files
