@@ -1,0 +1,22 @@
+# labs list
+- [x] lab 1:      
+    - romulus.zip (rm)
+    - romulus/
+    - [download.sh](https://github.com/teawm/openbmc/tree/main/download.sh)
+    - [openbmc.sh](https://github.com/teawm/openbmc/tree/main/openbmc.sh)
+- [x] lab 2:      
+    - no lab
+- [x] lab 3:      
+    - no files
+- [x] lab 4:      
+    - [openbmc_auth_tests.py](https://github.com/teawm/openbmc/tree/main/openbmc_auth_tests.py)
+- [x] lab 5:      
+    - [test_redfish.py](https://github.com/teawm/openbmc/tree/main/test_redfish.py)
+- [x] lab 6:      
+    - [locustfile.py](https://github.com/teawm/openbmc/tree/main/locustfile.py)
+- [x] lab 7:        
+    - [Dockerfile](https://github.com/teawm/openbmc/tree/main/Dockerfile)
+    - [Jenkinsfile](https://github.com/teawm/openbmc/tree/main/Jenkinsfile)
+    - [Dockerfile.jenkins](https://github.com/teawm/openbmc/tree/main/Dockerfile.jenkins) // использовался для нахождения ошибок
+- [x] lab 8:
+    - no files
